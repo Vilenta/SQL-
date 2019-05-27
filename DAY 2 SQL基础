@@ -1,0 +1,48 @@
+SQL——DDL部分(CACDCD)
+1、C__CREAT DATABASE
+CREAT DATABASE：创建数据库
+CREAT DATABASE database_name;
+
+2、C__CREAT TABLE
+CREAT TABLE：创建数据库中的表
+CREAT TABLE 表名称                  例：CREAT TABLE persons
+（							   （
+列名称1 数据类型				    id_p int,
+列名称2 数据类型				    lastname varchar(255)
+列名称3 数据类型				    city varchar(255)
+...							    address varchar(255)
+）                      				    )
+常用数据类型：varchar（可变长度，最大长度n）、int（整数）、data（日期）
+
+3、C_CREAT INDEX
+CREAT INDEX ：在表中创建索引，利用索引更高效的查询数据
+语法：
+①创建一个简单的索引：
+CREAT INDEX index_name
+ON table_name (column_name)  #column_name是规定需要索引的列
+②创建一个UNIQUE索引
+CREAT UNIQUE INDEX index_name
+ON table_name (column_name)
+例如：CREAT INDEX PersonIndex
+    ON Person （Lastname）
+  #在Person这个表中，创建一个名为‘PersonIndex’，以Lastname为默认升序的简单索引。
+  
+4、D_DROP DATABASE
+DROP DATABASE：删除数据库
+语法：DROP DATABASE 数据库名称
+
+5、D_DROP TABLE
+DROP TABLE：删除数据库中的表格（包括结构，属性，索引全部删除）
+语法：DROP TABLE 表名称
+！！！如果想保留表的结构，属性，索引，可以使用TRUNCATE TABLE
+语法：TRUNCATE TABLE 表名称
+
+6、D_DROP INDEX
+DROP INDEX：删除表格中的索引
+语法：ALTER TABLE table_name
+   DROP INDEX index_name
+   
+7、ALTER TABLE
+添加列：ADD 列名称 数据类型
+改变列：ALTER COLUMN 列名称 数据类型
+删除列：DROP COLUMN 列名称 数据类型
