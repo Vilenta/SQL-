@@ -1,0 +1,10 @@
+1、JOIN用法
+  **通用语法：
+        SELECT 列名称 FROM 表1 
+        （INNER/LEFT/RIGHT/FULL）JOIN 表2 
+          ON 表1.列名称 = 表2.列名称
+    1.INNER JOIN ：左表，右表都包含的内容进行返回
+    2.LEFT JOIN：左表所有内容进行返回，即便右表中没有匹配
+    3.RIGHT JOIN：右表中所有内容进行返回，即便左表中没有匹配
+    4.FULL JOIN：左表+右表，所有内容进行返回，即使信息不全
+2.UNION 与 UNION ALL
