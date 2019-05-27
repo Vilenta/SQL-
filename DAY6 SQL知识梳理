@@ -1,0 +1,33 @@
+SELECT用法
+  1、SELECT...FROM...
+  #选取1列，选取多列，选取全部列（用*表示，但不建议使用*，会增加查询时间，降低查询效率）
+  2、SELECT...FROM...WHERE...
+  #使用WHERE定位，给某个列的属性进行赋值
+  3、SELECT...FROM...WHERE...AND/OR...
+  #AND表示多个条件同时满足，OR表示至少满足1个条件即可。
+  ！！难度升级：AND 和 OR同时使用，注意AND的优先级比OR高，可以用（）的方式指定运算顺序
+  4、SELECT...FROM...WHERE...IN（a,b,c）
+  #IN是以具象的条件进行筛选
+  5、SELECT...FROM...WHERE...LIKE '通配符'
+  #LIKE是比较模糊的查询，可以借用通配符达到查询的目的
+  ！！引出通配符概念：
+      '%'：A%表示以A字母为开头；%B表示以B字母结尾；%ABC%表示包含ABC三个字母
+      '_'：#代替其中某一个或几个字符，'na_e'，甚至'____'
+      '[charlist]'：#包含某一字符，与%连用,用法与%一致，[A]%
+      '[^charlist]'：#不包含某一字符，与%连用,用法与%一致,[^A]%
+   6、IN 和 LIKE 的相反方式： NOT IN 和 NOT LIKE
+   7、聚合函数，sum、max、min、count、average，使用GROUP BY语句
+   ！！WHERE条件中不能包括聚合函数，通常可以使用HAVING子句
+   例：select 列, avg(数量) AS 平均值 from A group by 列;
+   例：select 列, count(列) AS 记录数 from A group by 列;
+   例：select 列, count(列) AS 记录数 from A group by 列 HAVING COUNT(列) > 数值;
+   8、去重DISTINCT：SELECT DISTINCT...FROM...
+   9、逻辑判断:CASE WHEN...ELSE...END
+   SELECT STATE
+            CASE WHEN '1' THEN '成功' 
+                 WHEN '2' THEN '失败'
+            ELSE '其他' END  
+            FROM  SYS_SCHEDULER
+   10、INSERT语句
+   11、UPDATE语句，与WHERE连用
+   12、DELETE语句，与WHERE连用
