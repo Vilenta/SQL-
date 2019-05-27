@@ -1,4 +1,5 @@
 SQL约束（constraints）
+
 ①NOT NULL：强制列不接受空值，一定需要赋值
 ②PRIMARY KEY：主键约束：唯一性，非空性，但只能存在1个，可以包含UNIQUE KEY
 语法：
