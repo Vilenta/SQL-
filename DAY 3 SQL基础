@@ -1,0 +1,37 @@
+TOP子句
+SQL SEVER ：SELECT TOP number/percent 列名称 FROM 表名称
+MySQL：SELECT 列名称 FROM 表名称 LIMIT number
+
+操作符
+ ①LIKE操作符：SELECT 列 FROM 表 WHERE 列 LIKE pattern（用%表示）/NOT LIKE 表示不包含
+     【 A%表示以A字母为开头；%B表示以B字母结尾；%ABC%表示包含ABC三个字母】
+     
+②通配符：除了%以外，还有_下划线，[charlist]任一字符，[!charlist]不包含这一字符
+！！！[charlist]和[!charlist]与%连用，
+例：SELECT * FROM persons WHERE city like '[ALN]%' #表示以ALN为字母开头
+③IN操作符：规定想要查询的值，包含特定的值，与WHERE搭配使用。
+       	SELECT 列名称 FROM 表名称 WHERE 列名称 IN （value1,value2）
+④BETWEEN操作符：选取介于两个值之间的数据范围，与WHERE搭配使用。
+        SELECT 列名称 FROM 表名称 WHERE 列名称 BETWEEN value1 AND value2
+！！！BETWEEN所在的区间内，只包括value1，不包括value2.
+⑤Alias：别名，跟在谁后面就给谁别名
+         列：SELECT 列_name AS alias_name
+  FROM 表_name
+         表：SELECT 列_name 
+  FROM 表_name AS alias_name 
+  
+⑥UNION操作符：合并两个或多个SELECT语句的结果集
+！！！SELCET必须拥有相同数量的列，列必须拥有相似的数据类型，同时，列的顺序相同
+        SELECT 列名称 FROM 表1
+        UNION/UNION ALL  #UNION选取不重复的数值，UNION ALL可以允许重复的数值
+ SELECT 列名称 FROM 表2
+ 
+ JOIN用法
+**通用语法：
+SELECT 列名称 FROM 表1 
+（INNER/LEFT/RIGHT/FULL）JOIN 表2 
+ON 表1.列名称 = 表2.列名称
+1.INNER JOIN ：左表，右表都包含的内容进行返回
+2.LEFT JOIN：左表所有内容进行返回，即便右表中没有匹配
+3.RIGHT JOIN：右表中所有内容进行返回，即便左表中没有匹配
+4.FULL JOIN：左表+右表，所有内容进行返回，即使信息不全
