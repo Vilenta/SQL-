@@ -1,0 +1,53 @@
+SQL约束（constraints）
+①NOT NULL：强制列不接受空值，一定需要赋值
+②PRIMARY KEY：主键约束：唯一性，非空性，但只能存在1个，可以包含UNIQUE KEY
+语法：
+a/创建表，添加一个PRIMARY KEY约束：PRIMARY KEY (id_p)
+b/创建表，添加多个PRIMARY KEY约束：CONSTRAINT pk_PersonID PRIMARY KEY (id_p，lastname)   #对PRIMARY KEY的命名
+c/修改表，添加一个PRIMARY KEY约束：ALTER TABLE persons ADD PRIMARY KEY (id_p)
+d/修改表，添加多个PRIMARY KEY约束：ALTER TABLE persons ADD CONSTRAINT pk_PersonID PRIMARY KEY (id_p，lastname)
+e/修改表，撤销PRIMARY KEY约束：DROP PRIMARY KEY
+③UNIQUE CONSTRAINT：唯一约束：唯一性，可以空，可以有多个
+语法：
+a/创建表，添加一个UNIQUE约束：UNIQUE (id_p)
+b/创建表，添加多个UNIQUE约束：CONSTRAINT uc_PersonID UNIQUE (id_p，lastname)     #对UNIQUE CONSTRAINT的命名
+c/修改表，添加一个UNIQUE约束：ALTER TABLE persons ADD UNIQUE (id_p)
+d/修改表，添加多个UNIQUE约束：ALTER TABLE persons ADD CONSTRAINT uc_PersonID UNIQUE (id_p，lastname)    
+e/修改表，撤销UNIQUE约束：DROP INDEX uc_PersonID
+④CHECK CONSTRAINT：检查约束：对数据的范围、格式进行限制
+语法：
+a/创建表，添加一个CHECK约束：CHECK (id_p > 0)
+b/创建表，添加多个CHECK约束：CONSTRAINT chk_Person CHECK (id_p > 0 AND city = 'Sandes')  #对PRIMARY KEY的命名
+c/修改表，添加一个CHECK约束：ALTER TABLE persons ADD CHECK (id_p > 0)
+d/修改表，添加多个CHECK约束：ALTER TABLE persons ADD CONSTRAINT chk_Person CHECK (id_p > 0 AND city = 'Sandes') 
+e/修改表，撤销PRIMARY KEY约束：DROP CONSTRAINT chk_Person
+⑤DEFAULT KEY：默认约束：数据的默认值
+语法：
+a/创建表时，添加DEFAULT约束：列 varchar（n） DEFAULT '属性'
+b/使用GETDATE()函数：orderdate date DEFAULT GETDATE()  #插入时间的默认值
+c/修改表，添加DEFAULT约束：ALTER TABLE persons ALTER city SET DEFAULT 'Sandes'
+e/删除DEFAULT约束：ALTER TABLE persons ALTER city DROP DEFAULT
+⑥FOREIGN KEY：外键约束：需要建立两表的关系并引用主表的列
+一个表中foreign key 指向另外一个表中的primary，预防破坏表之间的连接
+语法：
+a/创建表，添加1个FOREIGN KEY约束：
+CREAT TABLE orders
+PRIMARY KEY (id_o)
+FOREIGN KEY (id_p) REFERENCES persons(id_p) 
+b/创建表，添加多个FOREIGN KEY约束：
+CREAT TABLE orders
+PRIMARY KEY (id_o)
+CONSTRAINT fk_perorders FOREIGN KEY (id_p)    #对FOREIGN的命名
+REFERENCES persons(id_p) 
+c/修改表，创建1个FOREIGN KEY约束：
+ALTER TABLE orders
+ADD FOREIGN KEY (id_p) 
+REFERENCES persons(id_p) 
+d/修改表
+ALTER TABLE orders
+ADD CONSTRAINT fk_perorders
+FOREIGN KEY (id_p) 
+REFERENCES persons(id_p) 
+e/修改表
+ ALTER TABLE orders
+DROP CONSTRAINT fk_perorders
