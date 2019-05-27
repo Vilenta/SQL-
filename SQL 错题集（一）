@@ -1,0 +1,80 @@
+1、Find all details of the prize won by EUGENE O'NEILL
+select * 
+from nobel 
+where winner ='EUGENE O\'NEILL'
+题目推荐用两个'符号来转义,需要添加/转义符
+个人还是推荐linux系统常用的转义符号\，这个基本上是类unix的传统
+
+2、The expression subject IN ('Chemistry','Physics') can be used as a value - it will be 0 or 1.Show the 1984 winners and subject ordered by subject and winner name; but list Chemistry and Physics last.
+按照获奖的科学领域跟获奖者的名字来排序，但是 化学和物理要被排在最后
+SELECT winner, subject 
+FROM nobel 
+where yr=1984 
+ORDER BY subject IN ('Physics','Chemistry'),subject asc,winner asc
+这里分析一下，以后也用得上，关键在order by subject IN ('Physics','Chemistry') ,subject asc,winner asc
+后两个比较容易理解 字段名加上asc表示按正常排序，难点在 subject in (xxx)这个表达式，
+排除后两个表达式，这是一个分组排序，
+subject in(xxx)为0的分成一组 排序
+subject in(xxx)为1的分成一组 排序
+得到结果连接起来就是新的排序表
+
+3、DISTINCT用法
+1、使用distinct去重(适合查询整张表的总数)
+有多个学校＋教师投稿，需要统计出作者的总数
+select count(author) as total 
+from files;  						#每个作者都投稿很多，这里有重复的记录。
+select distinct author 
+from files;						#有可能两个学校的教师姓名相同，结果只统计一个，出错。
+select distinct author,sid 
+from files							#统计(作者＋学校id)的组合唯一值，正确
+select count(distinct author,sid) as total 
+from files							#统计一共有多少人
+2、group by 分组去重(适合根据条件分组后查询每组的总数)
+select author, count(distinct id) 
+from files group by sid
+
+4、COUNT()，CONCAT()用法
+Germany (population 80 million) has the largest population of the countries in Europe. Austria (population 8.5 million) has 11% of the population of Germany.
+Show the name and the population of each country in Europe. Show the population as a percentage of the population of Germany.
+正确答案：
+SELECT name,
+CONCAT(ROUND(population/(SELECT population FROM world WHERE name='Germany')*100),'%')
+FROM world
+WHERE continent='Europe' ;
+
+5、ALL用法：把满足括号内部条件的所有行全部罗列出来，和前面进行比较
+Which countries have a GDP greater than every country in Europe? [Give the name only.] (Some countries may have NULL gdp values)
+正确答案：
+SELECT name FROM world
+WHERE gdp > ALL(SELECT gdp FROM world WHERE continent='Europe' AND gdp>0);
+！！！敲黑板——划重点（ANY 和 ALL区别）
+Any:>Any 表示至少大于一个值，即大于最小值。
+All: >All 表示大于每一个值，即大于最大值
+ALL例：
+select * from student    #在01班中找出所有比02班年龄最大的还大的所有同学
+where 班级='01' and age > all (select age from student where 班级='02');
+等于
+select * from student 
+where 班级='01' and age > (select max(age) from student where 班级='02'); 
+ANY例：
+select * from student     #在01班中找出任意一个年龄比02班大的同学
+where 班级='01' and age > any (select age from student where 班级='02');
+等于
+select * from student 
+where 班级='01' and age > (select min(age) from student where 班级='02'); 
+
+6、WHERE 和 HAVING用法
+例：WHERE
+For each continent show the continent and number of countries with populations of at least 10 million.
+select continent,count(name)
+ from world 
+where population>= 10000000 group by continent
+例：HAVING
+List the continents that have a total population of at least 100 million.
+select continent
+ from world
+ group by continent 
+having sum(population)>=100000000
+！！！在子句中出现聚合函数时，不能使用WHERE！！！
+WHERE sum(population) >= 100000000        #是错误的
+HAVING sum(population) >= 100000000	 #是正确的
