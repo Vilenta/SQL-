@@ -28,6 +28,6 @@ SELECT用法
                  WHEN '2' THEN '失败'
             ELSE '其他' END  
             FROM  SYS_SCHEDULER
-   10、INSERT语句
-   11、UPDATE语句，与WHERE连用
-   12、DELETE语句，与WHERE连用
+   10、INSERT语句：INSERT...VALUES...
+   11、UPDATE语句，与WHERE连用：UPDATE...FROM...
+   12、DELETE语句，与WHERE连用：DELETE...FROM...
