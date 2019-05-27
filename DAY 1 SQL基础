@@ -1,0 +1,37 @@
+SQL基础学习：RDBMS=Relational Database Management System)
+DML：数据操作语言（SUDI）
+SELECT获取、UDATE更新、DELETE删除、INSERT INTO插入
+DDL：数据定义语言（CACDCD)
+CREAT DATABASE创建新数据库、ALTER DATABASE修改数据库
+CREAT TABLE创建新表、DROP TABLE删除表
+CREAT INDEX创建索引、DROP INDEX删除索引
+
+SQL——DML部分(SUDI)
+1、S__SELECT
+①SELECT 列 FROM 表
+    SELECT * FROM 表
+②SELECT DISTINCT 列 FROM 表 #获取不重复的列内容
+③SELECT 列 FROM 表 WHERE 条件判断<大于，小于，等于，不等于，区间between，模式like>
+④SELECT 列 FROM 表 ORDER BY 列 ASC #默认升序
+    SELECT 列 FROM 表 ORDER BY 列 DESC #降序
+⑤SELECT INTO：把列插入新表，可以所有的列*，也可以具体某几列
+SELECT 列名称/*（全部列）
+ INTO 新表 【IN 外部数据库】
+FROM 旧表
+！！复杂结构：
+SELECT A，B
+INTO table1_table2_backup
+FROM table1
+INNER JOIN table2
+ON table1.列 = table2.列
+2、U__UPDATE
+UPDATE：修改表中的数据，利用WHERE定位需要修改的某一行，SET定位需要修改的哪一列
+        UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
+3、D__DELETE
+DELETE：删除表中的数据，但保留表中的结构及属性
+        DELETE FROM 表名称 WHERE 列名称 = 值 #删除表中某一列的数据
+        DELETR * FROM 表名称 #删除整张表
+4、I__INSERT INTO
+INSERT INTO：插入新的一整行，或者新的某几列元素
+        INSERT INTO 表名称 VALUES（值1，值2） #VALUES指的是具体内容
+        INSERT INTO table_name（列1，列2）VALUES（值1，值2）
