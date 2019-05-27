@@ -1,0 +1,53 @@
+SQL书写顺序：
+SELECT > FROM > WHERE > GROUP BY > HAVING > ORDER BY
+SQL执行顺序：
+FROM > WHERE > GROUP BY > HAVING > SELECT > ORDER BY
+
+执行以下代码说明执行过程：
+  SELECT product_type,count(*)
+  FROM Product
+  WHERE sale_price > 100
+  GROUP BY product_type
+  HAVING count(*) > 1
+  ORDER BY product_type
+执行过程如下：
+1、FROM product
+指定从Product表获取数据。
+
+2、WHERE sale_price > 100
+筛选销售价大于100的：
+
+3、GROUP BY product_type
+以product_type列分组：
+
+4、HAVING count(*) > 1
+筛选出组内数据行大于1的
+
+5、SELECT product_type,count(*)
+筛选出product_type,count(*)列
+6、ORDER BY product_type
+以 product_type列排序
+
+关联子查询SELECT语句：
+记住，关联子查询和正常的SELECT语句完全不同。
+SELECT product _type , product_name, sale_price
+FROM Product AS P1
+读取第一个数据，P1.product_type = '衣服'
+传入到子查询中，得到结果：
+SELECT AVG(sale_price)
+FROM Product AS P2
+WHERE P2.product_type = ‘衣服’
+GROUP BY product_type);
+第一次子查询结果：
+从子查询得到的结果AVG(sale_price)=2500，返回主查询：
+SELECT product_type , product_name, sale_price
+FROM Product AS P1
+WHERE sale_price > 2500 AND product_type = ‘衣服’
+第一次整个语句的结果：
+然后，product _type取第二个值，得到整个语句的第二结果，依次类推，把product _type全取值一遍，就得到了整个语句的结果集。
+
+总结：
+1、关联子查询的执行逻辑完全不同于正常的SELECT语句。
+2、关联子查询执行逻辑如下：
+（1）先从主查询的Product表中product _type列取出第一个值，进入子查询中，得到子查询结果，然后返回父查询，判断父查询的where子句条件，则返回整个语句的第1条结果。
+（2）重复上述操作，直到所有主查询中的Product表中product _type列记录取完为止。得出整个语句的结果集，就是最后的答案。
