@@ -78,3 +78,8 @@ having sum(population)>=100000000
 ！！！在子句中出现聚合函数时，不能使用WHERE！！！
 WHERE sum(population) >= 100000000        #是错误的
 HAVING sum(population) >= 100000000	 #是正确的
+   错误案例：
+   SELECT region, SUM(area)
+   FROM bbc 
+  	WHERE SUM(area) > 15000000   #WHERE不能后接聚合函数
+   GROUP BY region
