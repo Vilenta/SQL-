@@ -1,0 +1,48 @@
+1/  Which were the busiest years for 'John Travolta', 
+    show the year and the number of movies he made each year for any year in which he made more than 2 movies.
+    解题答案：
+    SELECT yr,COUNT(title) FROM movie 
+    JOIN casting ON movie.id=movieid
+    JOIN actor   ON actorid=actor.id
+    WHERE name='John Travolta'
+    GROUP BY yr
+    HAVING COUNT(title)=(SELECT MAX(c) FROM
+       (SELECT yr,COUNT(title) AS c FROM movie 
+         JOIN casting ON movie.id=movieid
+         JOIN actor   ON actorid=actor.id
+          WHERE name='John Travolta'
+          GROUP BY yr) AS t
+        )
+
+3/List the film title and the leading actor for all of the films 'Julie Andrews' played in.
+    解题答案：#（用JOIN也可以）
+    SELECT DISTINCT title,name FROM movie
+    INNER JOIN casting ON movie.id = movieid
+    INNER JOIN actor ON actor.id =actorid
+    AND ord = 1
+    WHERE movieid IN (
+       SELECT t2.movieid FROM actor AS t1
+       INNER JOIN casting AS t2
+       ON t2.actorid = t1.id
+       AND name='Julie Andrews')
+       
+4/Obtain a list, in alphabetical order, of actors who've had at least 30 starring roles.
+    解题答案：
+    SELECT name
+    FROM casting JOIN actor
+      ON  actorid = actor.id
+    WHERE ord=1
+    GROUP BY name
+    HAVING COUNT(movieid)>=30
+    
+5/List all the people who have worked with 'Art Garfunkel'.
+    解题答案：
+    SELECT name FROM actor 
+    JOIN casting ON actor.id = actorid
+    and casting.movieid IN (
+        SELECT movieid FROM actor 
+        JOIN casting ON actor.id = actorid
+        and name = 'Art Garfunkel')
+    and name != 'Art Garfunkel';
+
+
