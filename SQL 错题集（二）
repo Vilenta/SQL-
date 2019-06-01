@@ -1,0 +1,18 @@
+1/Select the statement that shows the medium population density of each region
+  解题答案：
+  SELECT region SUM(population)/SUM(area) as density 
+  FROM bbc
+  GROUP BY region
+ 
+2/ Select the statement that shows the name and population density of the country with the largest population
+  解题答案：
+  SELECT name,population/area AS density 
+  FROM bbc 
+  WHERE population = (SELECT MAX(population) FROM bbc)
+  
+3/ show the name of all players who scored a goal against Germany.
+  解决答案：
+  SELECT DISTINCT player 
+  FROM goal JOIN game
+  ON matchid = id 
+  WHERE teamid != 'GER' AND (team1='GER' OR team2='GER');
