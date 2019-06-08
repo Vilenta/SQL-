@@ -1,0 +1,42 @@
+1/基本统计值 
+    问题分析：平均值/方差/中位数
+    平均值：总数/个数 ----> 求和for...in...     和    len（）
+    方差：（每个数-均值）²/个数 ----> pow（）函数
+    中位数：顺序排列，取出中间的数值 ----> sorted（）函数，注意双数时取中间两位数的平均数，单数时取中间数
+代码：
+    def getNums()
+        nums = []
+        txt = input("输入计算数值(回车退出)：")
+        while txt != "":
+            nums.append(eval(txt))
+            txt = input("输入计算数值(回车退出)：")
+        return nums
+    #计算平均值
+    def mean(numbers):
+        s = 0.0
+        for num in numbers:
+            s = s + num
+        return s/len(numbers)
+    #计算方差
+    def dev(numbers,mean):
+        sdev = 0.0
+        for num in numbers:
+            sdev = sdev + (num-mean)**2
+        return pow(sdev/(len(numbers)-1),0.5)
+    #计算中位数
+    def median(numbers):
+    sorted(numbers)
+    size = len(numbers)
+    if size//2 == 0:
+        med = (numbers[size//2-1] + numbers[size//2])/2
+    else:
+        med = numbers[size//2]
+    return med
+
+#调用函数
+n =getNums()
+m = mean(n)
+print("平均值是：{},方差是：{}，中位数是：{}".format(m,dev(n,m),median(n))
+
+
+        
