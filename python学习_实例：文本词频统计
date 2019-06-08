@@ -1,0 +1,42 @@
+词频统计主要分成英文词频和中文词频，各自有不同的注意点
+    英文词频：★大小写//特殊符号 ----> lower（）函数     及      replace（）函数和for...in...遍历的使用
+    中文词频：★分词 ----> 需要使用第三方库jieba，利用jieba.lcut(文本)进行分词，并且需要注意编码格式
+    本次以英文halmet.txt及中文threekingdoms.txt作为实例练习
+    
+    Cal_hamlet.py
+    def getTxt():
+        txt = open("hamlet.txt","r").read()
+        txt = txt.lower()
+        for ch in '!"#$%&()*+-./:;<=>?@[\\]^_‘{|}~':
+            txt = txt.replace(ch," ")
+        return txt
+    #调用getTxt()函数
+    hamletTxt = getTxt()
+    words = hamletTxt.split()
+    counts = {}
+    for word in words:
+        counts[word] = counts.get[word,0] + 1
+    items = list(counts.items())
+    items.sort(key=lambda x:x[1],reverse = True)
+    for i in range(10):
+        word,count = items[i]
+        print("{0:<10}{1:>5}".format(word,count))
+
+    Cal_threekingdoms.py
+    #导入jieba第三方库
+    import jieba
+    txt = open("threekingdoms.txt","r",encoding = 'utf-8').read()
+    words = jieba.lcut(txt)
+    counts = {}
+    for word in words:
+        if len(word) == 1:
+            continue
+        else:
+            counts[word] = counts.get[word,0] + 1
+        items = list(counts.items())
+        items.sort(key=lambda x:x[1],reverse = True)
+        for i in range(10):
+            word,count = items[i]
+            print("{0:<10}{1:>5}".format(word,count))
+    
+    
