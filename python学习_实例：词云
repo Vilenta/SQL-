@@ -1,0 +1,63 @@
+词云：第三方库，wordcloud
+    使用方法:w = wordcloud.WordCloud()
+    配置参数//加载文件//输出文件
+    import wordcloud
+    w = wordcloud.WordCloud()  #配置参数，高度/宽度/字体/最大字数/背景颜色
+    w.generate()               #获取文本（★注意文本需要以空格分隔单词，！！！！即英文需要小写，去掉特殊符号，join空格；中文需要分词，join空格）
+    w.to_file()                #输出文件格式，png或jpg
+    
+    wordcloud参数
+    width：宽度，默认400像素，可修改为width=600
+    height：高度，默认200像素，可修改为height=800
+    min_font_size:字体中的最小字号，默认4号，可修改为min_font_size = 10
+    max_font_size:字体中的最大字号，默认10号，可修改为max_font_size = 20
+    font_step：字号的间隔，默认步长为1，可修改为font_step = 2
+    font_path:指定字体文件的路径，默认为None，可修改为font_path = "msyh.ttc"
+    max_words：显示词云最大单词数量，默认200，可修改为max_words = 20
+    stop_words：不显示的单词列表，用集合表示{""}，可修改为stop_words = {"python"}
+    background_color:指定图片词云背景颜色，默认为黑色，可修改为background_color = "white"
+  ★mask:指定词云形状，默认为长方形，需要引用imread()函数
+        from scipy.misc import imread
+        mask = imread("pic.png")
+        w = wordcloud.WordCloud(mask = mask)
+        
+代码1：
+    import jieba
+    import wordcloud
+    txt = "程序设计语言是计算机能够理解和识别用户操作意图的一种交互体系，它按照特定规则组织计算机指令，使计算机自动进行各种运算处理。"
+    w = wordcloud.WordCloud(width = 1000,height = 700,\
+        font_path = 'msyh.ttc',background_color = "white",max_words = 20)
+    !!!!进行空格添加
+    t = jieba.lcut(txt)
+    ls = " ".join(t)
+    w.generate(ls)
+    w.to_file("pywordcloud.png")
+    
+代码2：
+    import jieba
+    import wordcloud
+     f = open("程序描述.txt"，"r",encoding = "utf-8")
+     txt = f.read()
+     f.close()
+     t =jieba.lcut(txt)
+     ls = " ",join(t)
+     w = wordcloud.WordCloud(width = 1000,height =700,\
+         font_path = "msyh.ttc",background_color = "white",max_words = 20)
+     w.generate(ls)
+     w.to_file("pywordcloud.png")
+     
+ 代码3：----->进化版(修改词云背景图片)
+     import jieba
+     import wordcloud
+     from scipy.misc import imread
+     mask = imread("fivestar.png")
+     f = open("程序描述.txt"，"r",encoding = "utf-8")
+     txt = f.read()
+     f.close()
+     t =jieba.lcut(txt)
+     ls = " ",join(t)
+     w = wordcloud.WordCloud(width = 1000,height =700,\
+         font_path = "msyh.ttc",background_color = "white",max_words = 20,\
+         mask = mask)
+     w.generate(ls)
+     w.to_file("pywordcloud.png")
