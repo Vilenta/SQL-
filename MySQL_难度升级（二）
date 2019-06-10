@@ -1,0 +1,35 @@
+score1表               student1表                   teacher表
+sno/cno/score          sno/sname/sage/ssex          tno/tname
+-----------------------------------------------------------------------
+1. 查询" 01 "课程比" 02 "课程成绩高的学生的信息及课程分数
+1.1 查询同时存在" 01 "课程和" 02 "课程的情况
+1.2 查询存在" 01 "课程但可能不存在" 02 "课程的情况(不存在时显示为 null )
+1.3 查询不存在" 01 "课程但存在" 02 "课程的情况
+
+思路整理：
+1、求出01课程的信息
+SELECT * FROM score1 WHERE cno = 01;
+2、求出02课程的信息
+SELECT * FROM score1 WHERE cno = 02;
+3、求出01和02课程的汇总信息，并建立表别名a和b
+SELECT * FROM 
+(SELECT * FROM score1 WHERE cno = 01) AS a,
+(SELECT * FROM score1 WHERE cno = 02) AS b;
+4、根据条件，01和02的人是同一个，且01课程的分数要比02高
+SELECT * FROM 
+(SELECT * FROM score1 WHERE cno = 01) AS a,
+(SELECT * FROM score1 WHERE cno = 02) AS b
+WHERE a.sno = b.sno AND a.score > b.score;
+5、提取出想要的内容信息
+SELECT a.score class1,b.score class2 FROM 
+(SELECT * FROM score1 WHERE cno = 01) AS a,
+(SELECT * FROM score1 WHERE cno = 02) AS b
+WHERE a.sno = b.sno AND a.score > b.score;
+6、利用RIGHT JOIN把题目需要的信息汇总
+SELECT * FROM student1 RIGHT JOIN (
+SELECT a.score class1,b.score class2 FROM 
+(SELECT * FROM score1 WHERE cno = 01) AS a,
+(SELECT * FROM score1 WHERE cno = 02) AS b
+WHERE a.sno = b.sno AND a.score > b.score) r
+ON student.sno = r.sno;
+
