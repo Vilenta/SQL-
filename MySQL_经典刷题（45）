@@ -1,0 +1,64 @@
+MySQL练习（45题）
+#SELECT sname,ssex,class FROM student;
+#SELECT DISTINCT depart FROM teacher;
+#SELECT * FROM student;
+#SELECT * FROM score WHERE degree BETWEEN 60 AND 80;
+#SELECT * FROM score WHERE degree IN (85,86,88);
+#SELECT * FROM student WHERE class = 95031 OR ssex = '女';
+#SELECT * FROM student ORDER BY class DESC;
+#SELECT * FROM score ORDER BY cno,degree DESC;
+#SELECT COUNT(*) FROM student WHERE class = 95031;
+#SELECT sno,cno FROM score ORDER BY degree LIMIT 1;
+#SELECT avg(degree) FROM score WHERE cno =  '3-105';
+#SELECT avg(degree),cno FROM score WHERE cno LIKE '3%' GROUP BY cno HAVING count(*) >= 5;
+#SELECT sno FROM score WHERE degree BETWEEN 70 AND 90;
+#SELECT sname,cno,degree FROM student JOIN score ON student.sno = score.sno;
+#SELECT sno,cname,degree FROM score JOIN course ON score.cno = course.cno;
+#SELECT sname,cname,degreee FROM student JOIN score ON student.sno = score.sno 
+	JOIN course ON course.cno = score.cno;
+#SELECT AVG(degree) FROM score JOIN student ON score.sno = student.sno WHERE class = 95033;
+#SELECT a.sno,a.cno,b.rank FROM score a,grade b WHERE a.degree BETWEEN b.low AND b.upp;
+#SELECT sno FROM score WHERE cno = '3-105' AND degree > (SELECT degree FROM score 
+	WHERE cno = '3-105' AND sno = 109);
+#SELECT * FROM score WHERE degree < (SELECT MAX(degree) FROM score) GROUP BY sno
+	HAVING COUNT(sno) >= 2;
+#SELECT * FROM score WHERE cno = '3-105' AND degree > (SELECT degree FROM score 
+	WHERE cno = '3-105' AND sno = 109);
+#SELECT sno,sname,sbirthday FROM student WHERE year(sbirthday) = (SELECT year(sbirthday) 
+	FROM student WHERE sno =108);
+#SELECT degree FROM score JOIN course ON score.cno = course.cno JOIN teacher ON 
+	course.tno = teacher.tno WHERE tname = '张旭';
+#SELECT tname FROM teacher a JOIN (course b,score c) ON(a.tno = b.tno AND b.cno = c.cno) 
+	GROUP BY c.cno HAVING COUNT(*) > 5;
+#SELECT * FROM student WHERE class = 95033 OR class = 95031;
+#SELECT DISTINCT cno FROM score where degree > 85;
+#SELECT * FROM score c JOIN (course b,teacher d) ON (c.cno = b.cno AND b.tno = d.tno) 
+	WHERE d.depart = '计算机系';
+#SELECT tname,prof FROM teacher WHERE depart = '计算机系' AND prof NOT IN (SELECT prof 
+	FROM teacher WHERE depart= '电子工程系');
+#SELECT cno,sno,degree FROM score WHERE cno = '3-105' AND degree > (SELECT MAX(degree) 
+#SELECT sno,cno,degree FROM score a WHERE degree = (SELECT MAX(degree) FROM score b 
+	WHERE a.sno = b.sno);
+#SELECT DISTINCT sname FROM student WHERE ssex = (SELECT ssex FROM student 
+	WHERE sname = '李军');
+#SELECT DISTINCT sname FROM student WHERE ssex = (SELECT ssex FROM student WHERE sname = '李军')
+	AND class = (SELECT class FROM student WHERE sname = '李军');
+#SELECT student.sname,student.ssex,course.cname,score.cno,score.degree FROM score
+	JOIN(student ,course) ON (score.sno = student.sno AND score.cno = course.cno)
+	WHERE cname = '计算机导论' AND ssex = '男';
+	FROM score WHERE cno = '3-245') ORDER BY degree DESC;
+#SELECT cno,sno,degree FROM score WHERE cno = '3-105' AND degree > (SELECT MIN(degree) 
+	FROM score WHERE cno = '3-245');
+#SELECT sname AS name,ssex AS sex,sbirthday AS birthday FROM student WHERE ssex = '女'
+	UNION
+	SELECT tname AS name,tsex AS sex,tbirthday AS birthday FROM teacher WHERE tsex = '女';
+#SELECT * from score WHERE degree < (SELECT avg(degree) FROM score);
+#SELECT DISTINCT tname,depart FROM teacher WHERE tname IN (SELECT tname 
+	FROM teacher,course,score where teacher.tno = course.tno AND score.cno = course.cno);
+#SELECT DISTINCT tname,depart FROM teacher WHERE tname NOT IN (SELECT tname 
+	FROM teacher,course,score WHERE teacher.tno = course.tno AND score.cno = course.cno); 
+#SELECT class FROM student WHERE ssex = '男' GROUP BY class HAVING COUNT(*) >= 2;
+#SELECT * FROM student WHERE sname NOT LIKE '王%';
+#SELECT sname,year(CURDATE())-year(sbirthday) FROM student;
+#SELECT MAX(sbirthday),MIN(sbirthday) FROM student;
+#SELECT tname,cname FROM teacher JOIN course ON teacher.tno = course.tno WHERE tsex = '男';
