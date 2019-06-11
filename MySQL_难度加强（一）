@@ -1,0 +1,78 @@
+#SELECT DISTINCT * FROM student RIGHT JOIN
+	(SELECT a.sid,a.score class1,b.score class2 FROM 
+	(SELECT * FROM sc WHERE CId = 01) AS a,
+	(SELECT * FROM sc WHERE CId = 02) AS b
+	WHERE a.sid = b.sid AND a.score > b.score) r
+	ON student.sid = r. sid;
+#SELECT * FROM 
+	(SELECT * FROM sc WHERE cid =01)AS a,
+	(SELECT * FROM sc WHERE cid =02)AS b
+	WHERE a.sid = b.sid;
+#SELECT * FROM 
+	(SELECT * FROM sc WHERE cid = 01)AS a
+	LEFT JOIN 
+	(SELECT * FROM sc WHERE CId = 02) AS b
+	ON a.sid = b.sid;
+#SELECT * FROM sc 
+	WHERE SId NOT IN 
+	(SELECT SId FROM sc WHERE cid = 01)
+	AND cid = 02;
+#SELECT student.SId,sname,ss FROM student,
+	(SELECT sid,avg(score) AS ss FROM sc
+	GROUP BY SId
+	HAVING avg(score) >= 60)r
+	WHERE student.sid = r.SId; 
+#SELECT DISTINCT student.* FROM (student,sc)  #   student.*表示student表内的所有内容
+	WHERE student.SId = sc.SId;
+#SELECT student.SId,sname,r.num,r.sum FROM student,
+	(SELECT sid,COUNT(cid) as num ,SUM(score) as sum FROM sc
+	GROUP BY SId)as r                     #   有聚合函数就需要紧跟GROUP BY 
+	WHERE student.sid = r.sid;
+#SELECT * FROM student WHERE student.sid IN (SELECT sid FROM sc);
+-------------或--------------------------------------------------
+#SELECT DISTINCT student.* FROM (student,sc) WHERE student.sid= sc.SId;
+#SELECT COUNT(*) FROM teacher WHERE tname LIKE '李%';
+#SELECT student.* FROM student,sc,course,teacher
+	WHERE student.sid = sc.SId AND sc.cid = course.CId AND course.TId = teacher.TId
+	AND tname = '张三';
+#SELECT * FROM student 
+	WHERE student.sid NOT IN 
+	(SELECT sc.sid FROM sc 
+	GROUP BY sc.SId 
+	HAVING COUNT(sc.cid) = (SELECT count(cid) FROM course));
+-------------或-------------------------------------------------
+#SELECT student.* FROM student WHERE sid NOT IN 
+	(SELECT sid FROM sc 
+	GROUP BY sid 
+	HAVING COUNT(cid) =3 );
+#SELECT * FROM student 
+	WHERE student.sid IN
+	(SELECT sc.sid FROM sc 
+	WHERE cid IN (SELECT cid FROM sc WHERE sid = 01));
+#SELECT * FROM student 
+	WHERE student.sid NOT IN
+	(SELECT sc.SId FROM sc WHERE sc.CId IN (
+	SELECT cid FROM course,teacher WHERE course.tid = teacher.TId AND tname = '张三'));
+--------------------------------------------------------------------------------
+#SELECT student.sid,sname,avg(score) FROM student,sc
+	WHERE student.sid = sc.SId AND score < 60
+	GROUP BY student.SId
+-----------------
+复杂写法：
+#SELECT student.SId,sname,avscore FROM student,
+	(SELECT sid,avg(score)AS avscore FROM sc
+	WHERE score < 60
+	GROUP BY sid 
+	HAVING COUNT(*) >= 2)r
+	WHERE student.sid = r.sid;
+	HAVING COUNT(sc.CId) > 1;
+---------------------------------------------------------------------------------
+#SELECT student.*,sc.score FROM student,sc
+	WHERE student.sid = sc.SId AND score < 60 AND sc.CId = 01
+	ORDER BY score DESC;
+#SELECT * FROM sc
+	LEFT JOIN 
+	(SELECT sid,avg(score) AS avscore FROM sc
+	GROUP BY SId) r
+	ON sc.SId = r.sid
+	ORDER BY avscore DESC;
